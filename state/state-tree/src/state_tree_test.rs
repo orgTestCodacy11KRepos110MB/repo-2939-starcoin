@@ -368,3 +368,49 @@ pub fn test_state_multi_commit_and_flush() -> Result<()> {
     assert_eq!(state.get(&hash_value3)?, None);
     Ok(())
 }
+
+#[derive(Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+struct StringKey(pub Vec<u8>);
+
+impl RawKey for StringKey {
+    fn encode_key(&self) -> Result<Vec<u8>> {
+        Ok(self.0.clone())
+    }
+
+    fn decode_key(bytes: &[u8]) -> Result<Self> {
+        Ok(StringKey(bytes.to_vec()))
+    }
+}
+
+#[test]
+fn test_cookbook() -> Result<()> {
+    let tmpdir = starcoin_config::temp_dir();
+    let instance = StorageInstance::new_db_instance(DBStorage::new(
+        tmpdir.path(),
+        RocksdbConfig::default(),
+        None,
+    )?);
+    let storage = Storage::new(instance)?;
+    let state = StateTree::new(Arc::new(storage.clone()), None);
+    let key1 = StringKey("Hello".as_bytes().to_vec());
+    let value1 = "World".as_bytes().to_vec();
+    let key11 = StringKey("abc".as_bytes().to_vec());
+    let value11 = "abc".as_bytes().to_vec();
+    state.put(key1.clone(), value1);
+    state.put(key11, value11);
+    state.commit()?;
+    state.flush()?;
+    println!("flush end");
+    let root_hash1 = state.root_hash();
+    let state1 = StateTree::new(Arc::new(storage.clone()), Some(root_hash1));
+    state1.remove(&key1);
+    let key2 = StringKey("hello".as_bytes().to_vec());
+    let value2 = "world".as_bytes().to_vec();
+    state1.put(key2, value2);
+    state1.commit()?;
+    state1.flush()?;
+    let root_hash2 = state1.root_hash();
+    let state2 = StateTree::new(Arc::new(storage.clone()), Some(root_hash2));
+    assert_eq!(state2.get(&key1).unwrap(), None);
+    Ok(())
+}

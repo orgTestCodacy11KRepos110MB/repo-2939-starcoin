@@ -982,3 +982,10 @@ where
         .next()
         .map(|(k, _v)| k.clone())
 }
+
+
+
+#[test]
+fn test_cookbook() -> Result<()> {
+    Ok(())
+}
