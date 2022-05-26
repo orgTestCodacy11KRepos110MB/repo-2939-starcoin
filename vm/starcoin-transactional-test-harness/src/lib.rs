@@ -3,9 +3,10 @@ use crate::remote_state::{RemoteStateView, SelectableStateView};
 use anyhow::{bail, Result};
 use itertools::Itertools;
 use move_binary_format::{file_format::CompiledScript, CompiledModule};
+use move_command_line_common::files::verify_and_create_named_address_mapping;
 use move_compiler::compiled_unit::CompiledUnitEnum;
 use move_compiler::shared::{NumberFormat, NumericalAddress};
-use move_compiler::{shared::verify_and_create_named_address_mapping, FullyCompiledProgram};
+use move_compiler::{FullyCompiledProgram};
 use move_core_types::language_storage::StructTag;
 use move_core_types::{
     account_address::AccountAddress,
@@ -525,7 +526,7 @@ impl<'a> StarcoinTestAdapter<'a> {
 
         match &addr {
             RawAddress::Named(name) => {
-                if !self.compiled_state.contain_name_address(name.as_str()) {
+                if !self.compiled_state.named_address_mapping.contains_key(name.as_str()) {
                     // make it deterministic.
                     let key = Ed25519PrivateKey::try_from(
                         HashValue::sha3_256_of(name.as_bytes()).as_slice(),
@@ -535,15 +536,9 @@ impl<'a> StarcoinTestAdapter<'a> {
 
                     let addr = AccountPublicKey::Single(key.clone()).derived_address();
                     self.compiled_state
-                        .add_named_addresses({
-                            let mut addrs = BTreeMap::default();
-                            addrs.insert(
-                                name.as_str(),
-                                NumericalAddress::new(addr.into_bytes(), NumberFormat::Hex),
-                            );
-                            addrs
-                        })
-                        .unwrap();
+                        .named_address_mapping
+                        .insert(name.as_str(),
+                        NumericalAddress::new(addr.into_bytes(), NumberFormat::Hex),);
                     self.public_key_mapping.insert(name.clone(), key.into());
                 } else if public_key.is_some() {
                     bail!(
@@ -715,19 +710,23 @@ impl<'a> MoveTestAdapter<'a> for StarcoinTestAdapter<'a> {
                 }
             }
         }
-        let store = if let Some(rpc) = init_args.rpc {
-            let remote_view = RemoteStateView::from_url(&rpc, init_args.block_number).unwrap();
-            SelectableStateView::B(InMemoryStateCache::new(remote_view))
-        } else {
-            let net = ChainNetwork::new_builtin(init_args.network.unwrap());
-            if let Some(k) = &net.genesis_config().genesis_key_pair {
-                public_key_mapping.insert(Identifier::new("Genesis").unwrap(), k.1.clone().into());
-            }
-            let genesis_txn = Genesis::build_genesis_transaction(&net).unwrap();
-            let data_store = ChainStateDB::mock();
-            Genesis::execute_genesis_txn(&data_store, genesis_txn).unwrap();
-            SelectableStateView::A(data_store)
-        };
+        let store = 
+            if let Some(_) 
+            = 
+            init_args.rpc {
+                let rpc = init_args.rpc.unwrap();
+                let remote_view = RemoteStateView::from_url(&rpc, init_args.block_number).unwrap();
+                SelectableStateView::B(InMemoryStateCache::new(remote_view))
+            } else {
+                let net = ChainNetwork::new_builtin(init_args.network.unwrap());
+                if let Some(k) = &net.genesis_config().genesis_key_pair {
+                    public_key_mapping.insert(Identifier::new("Genesis").unwrap(), k.1.clone().into());
+                }
+                let genesis_txn = Genesis::build_genesis_transaction(&net).unwrap();
+                let data_store = ChainStateDB::mock();
+                Genesis::execute_genesis_txn(&data_store, genesis_txn).unwrap();
+                SelectableStateView::A(data_store)
+            };
 
         let association_public_key: AccountPublicKey =
             BuiltinNetworkID::try_from(store.get_chain_id().unwrap())
@@ -783,7 +782,7 @@ impl<'a> MoveTestAdapter<'a> for StarcoinTestAdapter<'a> {
         }
 
         let mut me = Self {
-            compiled_state: CompiledState::new(named_address_mapping, pre_compiled_deps),
+            compiled_state: CompiledState::new(named_address_mapping, pre_compiled_deps, None),
             default_syntax,
             public_key_mapping,
             storage: store,
