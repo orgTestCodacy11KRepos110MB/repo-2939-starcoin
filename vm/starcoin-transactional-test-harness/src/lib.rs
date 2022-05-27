@@ -715,8 +715,7 @@ impl<'a> MoveTestAdapter<'a> for StarcoinTestAdapter<'a> {
                 }
             }
         }
-        let store = if let Some(_) = init_args.rpc {
-            let rpc = init_args.rpc.unwrap();
+        let store = if let Some(rpc) = init_args.rpc {
             let remote_view = RemoteStateView::from_url(&rpc, init_args.block_number).unwrap();
             SelectableStateView::B(InMemoryStateCache::new(remote_view))
         } else {
