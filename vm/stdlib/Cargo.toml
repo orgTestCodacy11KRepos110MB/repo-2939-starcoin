@@ -16,7 +16,7 @@ bcs-ext = { package="bcs-ext", path = "../../commons/bcs_ext" }
 starcoin-move-compiler = { path = "../../vm/compiler"}
 move-prover = { git = "https://github.com/starcoinorg/move", rev = "f227e6b5c4214e5074c0fcb1ff551513a956b5d8"  }
 move-compiler = { git = "https://github.com/starcoinorg/move", rev = "f227e6b5c4214e5074c0fcb1ff551513a956b5d8"  }
-once_cell = "1.11.0"
+once_cell = "1.12.0"
 include_dir = "0.6.2"
 sha2 = "0.10.2"
 log = "0.4.16"
