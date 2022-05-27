@@ -8,6 +8,7 @@ use include_dir::{include_dir, Dir};
 use log::{info, LevelFilter};
 use move_bytecode_verifier::{dependencies, verify_module};
 use move_compiler::command_line::compiler::construct_pre_compiled_lib;
+use move_compiler::shared::PackagePaths;
 use move_compiler::FullyCompiledProgram;
 use once_cell::sync::Lazy;
 use sha2::{Digest, Sha256};
@@ -107,27 +108,26 @@ pub const SCRIPT_HASH_LENGTH: usize = HashValue::LENGTH;
 
 pub static G_PRECOMPILED_STARCOIN_FRAMEWORK: Lazy<FullyCompiledProgram> = Lazy::new(|| {
     let sources = stdlib_files();
-    let compiler = Compiler::from_files(sources, vec![], starcoin_framework_named_addresses())
-        .set_flags(Flags::empty().set_sources_shadow_deps(false));
-    // let program_res = construct_pre_compiled_lib(compiler).unwrap();
-    // match program_res {
-    //     Ok(df) => {
-    //         let compiled = df.compiled;
-    //         {
-    //             let compiler =
-    //                 Compiler::from_files(vec![], sources, starcoin_framework_named_addresses())
-    //                     .set_flags(Flags::empty().set_sources_shadow_deps(false));
-    //             let mut program_as_lib = construct_pre_compiled_lib(compiler).unwrap().unwrap();
-    //             program_as_lib.compiled = compiled;
-    //             program_as_lib
-    //         }
-    //     }
-    //     Err((files, errors)) => {
-    //         eprintln!("!!!Starcoin Framework failed to compile!!!");
-    //         move_compiler::diagnostics::report_diagnostics(&files, errors)
-    //     }
-    // }
-    todo!()
+    let program_res = construct_pre_compiled_lib(
+        vec![PackagePaths {
+            name: None,
+            paths: sources,
+            named_address_map: starcoin_framework_named_addresses(),
+        }],
+        None,
+        move_compiler::Flags::empty(),
+    );
+    match program_res {
+        Ok(Ok(df)) => df,
+        Ok(Err((files, errors))) => {
+            eprintln!("!!!Starcoin Framework failed to compile!!!");
+            move_compiler::diagnostics::report_diagnostics(&files, errors)
+        }
+        Err(e) => {
+            eprintln!("!!!Starcoin Framework failed to compile {:?}!!!", e);
+            panic!()
+        }
+    }
 });
 
 pub use starcoin_framework::STARCOIN_FRAMEWORK_SOURCES;
@@ -187,9 +187,13 @@ pub fn stdlib_files() -> Vec<String> {
 
 pub fn build_stdlib(targets: &[String]) -> BTreeMap<String, CompiledModule> {
     let compiled_units = {
-        let (files, units_res) = Compiler::from_files(targets.to_vec(), vec![], starcoin_framework_named_addresses())
-            .build()
-            .unwrap();
+        let (files, units_res) = Compiler::from_files(
+            targets.to_vec(),
+            vec![],
+            starcoin_framework_named_addresses(),
+        )
+        .build()
+        .unwrap();
         let (units, warnings) = unwrap_or_report_diagnostics(&files, units_res);
         println!(
             "{}",

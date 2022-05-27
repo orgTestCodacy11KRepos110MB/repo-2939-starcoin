@@ -360,7 +360,7 @@ impl StarcoinVM {
                         s.code().to_vec(),
                         s.ty_args().to_vec(),
                         s.args().to_vec(),
-                        vec![txn_data.sender()],
+                        txn_data.sender(),
                     )
                     .map_err(|e| e.into_vm_status())?;
             }
@@ -371,7 +371,7 @@ impl StarcoinVM {
                         s.function(),
                         s.ty_args().to_vec(),
                         s.args().to_vec(),
-                        vec![txn_data.sender()],
+                        txn_data.sender(),
                     )
                     .map_err(|e| e.into_vm_status())?;
             }
@@ -1110,7 +1110,11 @@ impl StarcoinVM {
         let mut session = self.move_vm.new_session(&data_cache);
         let result = session
             .execute_entry_function(module, function_name, type_params, args, &mut gas_status)
-            .map_err(|e| e.into_vm_status())?.return_values.into_iter().map(|(a,_)|a).collect();
+            .map_err(|e| e.into_vm_status())?
+            .return_values
+            .into_iter()
+            .map(|(a, _)| a)
+            .collect();
 
         let (changeset, events) = session.finish().map_err(|e| e.into_vm_status())?;
         let (writeset, _events) = convert_changeset_and_events(changeset, events)?;
