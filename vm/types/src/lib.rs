@@ -179,5 +179,6 @@ pub mod sign_message;
 pub mod sips;
 pub mod time;
 pub mod token;
+pub mod state_store;
 #[cfg(test)]
 mod unit_tests;
