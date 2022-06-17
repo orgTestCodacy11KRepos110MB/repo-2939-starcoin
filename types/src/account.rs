@@ -11,7 +11,7 @@ use crate::{
         authenticator::AuthenticationKey, RawUserTransaction, SignedUserTransaction,
         TransactionPayload,
     },
-    write_set::{WriteOp, WriteSet, WriteSetMut},
+    write_set::{WriteAccessPathSet, WriteAccessPathSetMut, WriteOp},
 };
 use starcoin_crypto::ed25519::*;
 use starcoin_crypto::keygen::KeyGen;
@@ -511,7 +511,7 @@ impl AccountData {
     //TODO create account by Move, avoid serialize data in rust.
     /// Creates a writeset that contains the account data and can be patched to the storage
     /// directly.
-    pub fn to_writeset(&self) -> WriteSet {
+    pub fn to_writeset(&self) -> WriteAccessPathSet {
         let (account_blob, balance_blobs, event_generator_blob) = self.to_value();
         let mut write_set = Vec::new();
         let account = account_blob
@@ -541,7 +541,7 @@ impl AccountData {
             self.make_event_generator_access_path(),
             WriteOp::Value(event_generator),
         ));
-        WriteSetMut::new(write_set).freeze().unwrap()
+        WriteAccessPathSetMut::new(write_set).freeze().unwrap()
     }
 
     /// Returns the address of the account. This is a hash of the public key the account was created

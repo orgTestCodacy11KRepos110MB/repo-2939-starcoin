@@ -15,7 +15,7 @@ use starcoin_types::state_set::ChainStateSet;
 use starcoin_types::vm_error::StatusCode;
 use starcoin_vm_types::errors::{Location, PartialVMError, PartialVMResult, VMResult};
 use starcoin_vm_types::state_view::StateView;
-use starcoin_vm_types::write_set::WriteSet;
+use starcoin_vm_types::write_set::WriteAccessPathSet;
 use std::collections::BTreeMap;
 use std::sync::Arc;
 use tokio::runtime::Runtime;
@@ -102,7 +102,7 @@ where
         }
     }
 
-    fn apply_write_set(&self, write_set: WriteSet) -> Result<()> {
+    fn apply_write_set(&self, write_set: WriteAccessPathSet) -> Result<()> {
         match self {
             SelectableStateView::A(a) => a.apply_write_set(write_set),
             SelectableStateView::B(b) => b.apply_write_set(write_set),

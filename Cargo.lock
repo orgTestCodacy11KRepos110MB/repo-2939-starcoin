@@ -10577,11 +10577,16 @@ dependencies = [
  "bcs-ext",
  "move-core-types",
  "move-stdlib",
+ "move-table-extension",
  "move-vm-runtime",
  "num_enum",
  "once_cell",
  "rand 0.8.5",
  "rand_core 0.6.3",
+ "serde 1.0.136",
+ "serde-helpers",
+ "serde_bytes",
+ "serde_json",
  "starcoin-config",
  "starcoin-crypto",
  "starcoin-logger",
@@ -10599,6 +10604,7 @@ name = "starcoin-vm-types"
 version = "1.11.9"
 dependencies = [
  "anyhow",
+ "bcs",
  "bcs-ext",
  "bech32",
  "chrono",
@@ -10611,6 +10617,8 @@ dependencies = [
  "move-core-types",
  "move-ir-types",
  "move-vm-types",
+ "num-derive",
+ "num-traits 0.2.14",
  "num_enum",
  "once_cell",
  "proptest",
@@ -10623,6 +10631,7 @@ dependencies = [
  "serde_json",
  "starcoin-accumulator",
  "starcoin-crypto",
+ "thiserror",
 ]
 
 [[package]]

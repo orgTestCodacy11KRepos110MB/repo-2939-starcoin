@@ -9,7 +9,7 @@ use starcoin_crypto::HashValue;
 use starcoin_state_tree::AccountStateSetIterator;
 use starcoin_types::language_storage::StructTag;
 use starcoin_types::state_set::AccountStateSet;
-use starcoin_types::write_set::WriteSet;
+use starcoin_types::write_set::WriteAccessPathSet;
 use starcoin_types::{
     access_path::AccessPath,
     account_address::AccountAddress,
@@ -148,7 +148,7 @@ pub trait ChainStateWriter {
     fn apply(&self, state_set: ChainStateSet) -> Result<()>;
 
     //TODO support batch write.
-    fn apply_write_set(&self, write_set: WriteSet) -> Result<()>;
+    fn apply_write_set(&self, write_set: WriteAccessPathSet) -> Result<()>;
 
     fn commit(&self) -> Result<HashValue>;
 

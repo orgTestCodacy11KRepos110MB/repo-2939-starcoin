@@ -8,13 +8,13 @@ use crate::errors::{
 };
 use crate::metrics::VMMetrics;
 use anyhow::{format_err, Error, Result};
-use crypto::HashValue;
 use move_core_types::resolver::MoveResolver;
 use move_vm_runtime::move_vm::MoveVM;
 use move_vm_runtime::move_vm_adapter::{PublishModuleBundleOption, SessionAdapter};
 use move_vm_runtime::session::Session;
 use once_cell::sync::Lazy;
 use starcoin_config::G_LATEST_GAS_SCHEDULE;
+use starcoin_crypto::HashValue;
 use starcoin_logger::prelude::*;
 use starcoin_types::account_config::config_change::ConfigChangeEvent;
 use starcoin_types::account_config::{
@@ -27,7 +27,7 @@ use starcoin_types::{
         SignatureCheckedTransaction, SignedUserTransaction, Transaction, TransactionOutput,
         TransactionPayload, TransactionStatus,
     },
-    write_set::WriteSet,
+    write_set::WriteAccessPathSet,
 };
 use starcoin_vm_types::access::{ModuleAccess, ScriptAccess};
 use starcoin_vm_types::account_address::AccountAddress;
@@ -51,7 +51,7 @@ use starcoin_vm_types::transaction::{DryRunTransaction, Package, TransactionPayl
 use starcoin_vm_types::transaction_metadata::TransactionPayloadMetadata;
 use starcoin_vm_types::value::{serialize_values, MoveValue};
 use starcoin_vm_types::vm_status::KeptVMStatus;
-use starcoin_vm_types::write_set::{WriteOp, WriteSetMut};
+use starcoin_vm_types::write_set::{WriteAccessPathSetMut, WriteOp};
 use starcoin_vm_types::{
     effects::{ChangeSet as MoveChangeSet, Event as MoveEvent},
     errors::Location,
@@ -1270,7 +1270,7 @@ pub(crate) fn discard_error_output(err: StatusCode) -> TransactionOutput {
     info!("discard error output: {:?}", err);
     // Since this transaction will be discarded, no writeset will be included.
     TransactionOutput::new(
-        WriteSet::default(),
+        WriteAccessPathSet::default(),
         vec![],
         0,
         TransactionStatus::Discard(err),
@@ -1281,7 +1281,7 @@ pub fn convert_changeset_and_events_cached<C: AccessPathCache>(
     ap_cache: &mut C,
     changeset: MoveChangeSet,
     events: Vec<MoveEvent>,
-) -> Result<(WriteSet, Vec<ContractEvent>), VMStatus> {
+) -> Result<(WriteAccessPathSet, Vec<ContractEvent>), VMStatus> {
     // TODO: Cache access path computations if necessary.
     let mut ops = vec![];
 
@@ -1307,7 +1307,7 @@ pub fn convert_changeset_and_events_cached<C: AccessPathCache>(
         }
     }
 
-    let ws = WriteSetMut::new(ops)
+    let ws = WriteAccessPathSetMut::new(ops)
         .freeze()
         .map_err(|_| VMStatus::Error(StatusCode::DATA_FORMAT_ERROR))?;
 
@@ -1326,7 +1326,7 @@ pub fn convert_changeset_and_events_cached<C: AccessPathCache>(
 pub fn convert_changeset_and_events(
     changeset: MoveChangeSet,
     events: Vec<MoveEvent>,
-) -> Result<(WriteSet, Vec<ContractEvent>), VMStatus> {
+) -> Result<(WriteAccessPathSet, Vec<ContractEvent>), VMStatus> {
     convert_changeset_and_events_cached(&mut (), changeset, events)
 }
 

@@ -177,8 +177,8 @@ pub mod on_chain_resource;
 pub mod serde_helper;
 pub mod sign_message;
 pub mod sips;
+pub mod state_store;
 pub mod time;
 pub mod token;
-pub mod state_store;
 #[cfg(test)]
 mod unit_tests;

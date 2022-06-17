@@ -53,7 +53,7 @@ use move_core_types::value::MoveValue;
 use starcoin_vm_runtime::session::SerializedReturnValues;
 use starcoin_vm_types::transaction::authenticator::AccountPublicKey;
 use starcoin_vm_types::transaction::{DryRunTransaction, TransactionOutput};
-use starcoin_vm_types::write_set::{WriteOp, WriteSetMut};
+use starcoin_vm_types::write_set::{WriteAccessPathSetMut, WriteOp};
 use starcoin_vm_types::{
     account_config::BalanceResource,
     block_metadata::BlockMetadata,
@@ -371,7 +371,7 @@ impl<'a> StarcoinTestAdapter<'a> {
             .apply_write_set(genesis_account_data.to_writeset())?;
 
         {
-            let mut writes = WriteSetMut::default();
+            let mut writes = WriteAccessPathSetMut::default();
             writes.push((
                 AccessPath::resource_access_path(
                     genesis_address(),
@@ -744,7 +744,7 @@ impl<'a> MoveTestAdapter<'a> for StarcoinTestAdapter<'a> {
 
         // add pre compiled modules
         if let Some(pre_compiled_lib) = pre_compiled_deps {
-            let mut writes = WriteSetMut::default();
+            let mut writes = WriteAccessPathSetMut::default();
             for c in &pre_compiled_lib.compiled {
                 if let CompiledUnitEnum::Module(m) = c {
                     // update named_address_mapping

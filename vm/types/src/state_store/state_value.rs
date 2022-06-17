@@ -9,24 +9,23 @@ use starcoin_crypto::hash::{CryptoHash, CryptoHasher};
 use starcoin_crypto::HashValue;
 
 #[derive(
-Clone,
-Debug,
-Default,
-CryptoHasher,
-Eq,
-PartialEq,
-Serialize,
-Deserialize,
-Ord,
-PartialOrd,
-Hash,
+    Clone,
+    Debug,
+    Default,
+    CryptoHasher,
+    Eq,
+    PartialEq,
+    Serialize,
+    Deserialize,
+    Ord,
+    PartialOrd,
+    Hash,
 )]
 #[cfg_attr(any(test, feature = "fuzzing"), derive(proptest_derive::Arbitrary))]
 pub struct StateValue {
     pub maybe_bytes: Option<Vec<u8>>,
     hash: HashValue,
 }
-
 
 /// XXX FIXME reference
 /// PlainCryptoHash for LeafNode

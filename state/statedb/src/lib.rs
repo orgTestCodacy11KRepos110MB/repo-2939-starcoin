@@ -16,7 +16,7 @@ pub use starcoin_state_api::{
 use starcoin_state_tree::mock::MockStateNodeStore;
 use starcoin_state_tree::AccountStateSetIterator;
 use starcoin_state_tree::{StateNodeStore, StateTree};
-use starcoin_types::write_set::{WriteOp, WriteSet, WriteSetMut};
+use starcoin_types::write_set::{WriteAccessPathSet, WriteAccessPathSetMut, WriteOp};
 use starcoin_types::{
     access_path::{AccessPath, DataType},
     account_address::AccountAddress,
@@ -442,7 +442,7 @@ impl ChainStateReader for ChainStateDB {
 impl ChainStateWriter for ChainStateDB {
     fn set(&self, access_path: &AccessPath, value: Vec<u8>) -> Result<()> {
         self.apply_write_set(
-            WriteSetMut::new(vec![(access_path.clone(), WriteOp::Value(value))])
+            WriteAccessPathSetMut::new(vec![(access_path.clone(), WriteOp::Value(value))])
                 .freeze()
                 .expect("freeze write_set must success."),
         )
@@ -450,7 +450,7 @@ impl ChainStateWriter for ChainStateDB {
 
     fn remove(&self, access_path: &AccessPath) -> Result<()> {
         self.apply_write_set(
-            WriteSetMut::new(vec![(access_path.clone(), WriteOp::Deletion)])
+            WriteAccessPathSetMut::new(vec![(access_path.clone(), WriteOp::Deletion)])
                 .freeze()
                 .expect("freeze write_set must success."),
         )
@@ -506,7 +506,7 @@ impl ChainStateWriter for ChainStateDB {
         Ok(())
     }
 
-    fn apply_write_set(&self, write_set: WriteSet) -> Result<()> {
+    fn apply_write_set(&self, write_set: WriteAccessPathSet) -> Result<()> {
         let mut locks = self.updates.write();
         for (access_path, write_op) in write_set {
             //update self updates record

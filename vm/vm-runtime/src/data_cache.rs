@@ -13,7 +13,7 @@ use starcoin_vm_types::{
     on_chain_config::ConfigStorage,
     state_view::StateView,
     vm_status::StatusCode,
-    write_set::{WriteOp, WriteSet},
+    write_set::{WriteAccessPathSet, WriteOp},
 };
 use std::collections::btree_map::BTreeMap;
 
@@ -48,7 +48,7 @@ impl<'a> StateViewCache<'a> {
     // Publishes a `WriteSet` computed at the end of a transaction.
     // The effect is to build a layer in front of the `StateView` which keeps
     // track of the data as if the changes were applied immediately.
-    pub(crate) fn push_write_set(&mut self, write_set: &WriteSet) {
+    pub(crate) fn push_write_set(&mut self, write_set: &WriteAccessPathSet) {
         for (ref ap, ref write_op) in write_set.iter() {
             match write_op {
                 WriteOp::Value(blob) => {
@@ -142,3 +142,15 @@ impl<'a> ConfigStorage for RemoteStorage<'a> {
         self.get(&access_path).ok()?
     }
 }
+
+/*
+impl<'a> TableResolver for RemoteStorage<'a> {
+    fn resolve_table_entry(
+        &self,
+        handle: &TableHandle,
+        key: &[u8],
+    ) -> Result<Option<Vec<u8>>, Error> {
+        self.get_state_value(&StateKey::table_item(handle.0, key.to_vec()))
+    }
+}
+ */

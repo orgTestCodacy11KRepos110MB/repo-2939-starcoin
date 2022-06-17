@@ -4,7 +4,7 @@ use starcoin_state_api::ChainStateWriter;
 use starcoin_types::state_set::ChainStateSet;
 use starcoin_vm_types::access_path::AccessPath;
 use starcoin_vm_types::state_view::StateView;
-use starcoin_vm_types::write_set::{WriteOp, WriteSet, WriteSetMut};
+use starcoin_vm_types::write_set::{WriteAccessPathSet, WriteAccessPathSetMut, WriteOp};
 
 pub struct InMemoryStateCache<V> {
     data_map: DashMap<AccessPath, Option<Vec<u8>>>,
@@ -24,7 +24,7 @@ impl<V> InMemoryStateCache<V> {
     // Publishes a `WriteSet` computed at the end of a transaction.
     // The effect is to build a layer in front of the `StateView` which keeps
     // track of the data as if the changes were applied immediately.
-    pub(crate) fn push_write_set(&self, write_set: &WriteSet) {
+    pub(crate) fn push_write_set(&self, write_set: &WriteAccessPathSet) {
         for (ref ap, ref write_op) in write_set.iter() {
             match write_op {
                 WriteOp::Value(blob) => {
@@ -42,13 +42,14 @@ impl<V> InMemoryStateCache<V> {
 impl<V> ChainStateWriter for InMemoryStateCache<V> {
     fn set(&self, access_path: &AccessPath, value: Vec<u8>) -> anyhow::Result<()> {
         self.apply_write_set(
-            WriteSetMut::new(vec![(access_path.clone(), WriteOp::Value(value))]).freeze()?,
+            WriteAccessPathSetMut::new(vec![(access_path.clone(), WriteOp::Value(value))])
+                .freeze()?,
         )
     }
 
     fn remove(&self, access_path: &AccessPath) -> anyhow::Result<()> {
         self.apply_write_set(
-            WriteSetMut::new(vec![(access_path.clone(), WriteOp::Deletion)]).freeze()?,
+            WriteAccessPathSetMut::new(vec![(access_path.clone(), WriteOp::Deletion)]).freeze()?,
         )
     }
 
@@ -56,7 +57,7 @@ impl<V> ChainStateWriter for InMemoryStateCache<V> {
         unimplemented!()
     }
 
-    fn apply_write_set(&self, write_set: WriteSet) -> anyhow::Result<()> {
+    fn apply_write_set(&self, write_set: WriteAccessPathSet) -> anyhow::Result<()> {
         self.push_write_set(&write_set);
         Ok(())
     }

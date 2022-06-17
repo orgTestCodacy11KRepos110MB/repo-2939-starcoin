@@ -13,7 +13,7 @@ use crate::{
     contract_event::ContractEvent,
     vm_status::{DiscardedVMStatus, KeptVMStatus},
     vm_status::{StatusCode, VMStatus},
-    write_set::WriteSet,
+    write_set::WriteAccessPathSet,
 };
 use anyhow::{format_err, Error, Result};
 use bcs_ext::Sample;
@@ -644,7 +644,7 @@ impl From<VMStatus> for TransactionStatus {
 /// The output of executing a transaction.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub struct TransactionOutput {
-    write_set: WriteSet,
+    write_set: WriteAccessPathSet,
 
     /// The list of events emitted during this transaction.
     events: Vec<ContractEvent>,
@@ -658,7 +658,7 @@ pub struct TransactionOutput {
 
 impl TransactionOutput {
     pub fn new(
-        write_set: WriteSet,
+        write_set: WriteAccessPathSet,
         events: Vec<ContractEvent>,
         gas_used: u64,
         status: TransactionStatus,
@@ -671,7 +671,7 @@ impl TransactionOutput {
         }
     }
 
-    pub fn write_set(&self) -> &WriteSet {
+    pub fn write_set(&self) -> &WriteAccessPathSet {
         &self.write_set
     }
 
@@ -687,7 +687,14 @@ impl TransactionOutput {
         &self.status
     }
 
-    pub fn into_inner(self) -> (WriteSet, Vec<ContractEvent>, u64, TransactionStatus) {
+    pub fn into_inner(
+        self,
+    ) -> (
+        WriteAccessPathSet,
+        Vec<ContractEvent>,
+        u64,
+        TransactionStatus,
+    ) {
         (self.write_set, self.events, self.gas_used, self.status)
     }
 }
