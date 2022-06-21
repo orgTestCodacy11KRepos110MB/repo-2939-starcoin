@@ -340,6 +340,7 @@ mod tests {
     use starcoin_vm_types::parser::parse_struct_tag;
     use starcoin_vm_types::state_view::StateView;
     use std::collections::BTreeMap;
+    use starcoin_vm_types::state_store::state_key::StateKey;
 
     pub struct InMemoryStateView {
         modules: BTreeMap<ModuleId, CompiledModule>,
@@ -362,6 +363,11 @@ mod tests {
                 m.serialize(&mut data).unwrap();
                 data
             }))
+        }
+
+        fn get_state_value(&self, state_key: &StateKey) -> Result<Option<Vec<u8>>> {
+            // XXX FIXME YSG
+            todo!()
         }
 
         fn multi_get(&self, _access_paths: &[AccessPath]) -> Result<Vec<Option<Vec<u8>>>> {

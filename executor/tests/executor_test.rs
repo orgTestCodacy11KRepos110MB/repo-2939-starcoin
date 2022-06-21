@@ -40,6 +40,7 @@ use test_helper::executor::{
 use starcoin_state_api::StateReaderExt;
 use starcoin_types::account_config::G_STC_TOKEN_CODE;
 use starcoin_vm_types::account_config::core_code_address;
+use starcoin_vm_types::state_store::state_key::StateKey;
 use vm_runtime::starcoin_vm::StarcoinVM;
 
 #[derive(Default)]
@@ -47,6 +48,10 @@ pub struct NullStateView;
 
 impl StateView for NullStateView {
     fn get(&self, _access_path: &AccessPath) -> Result<Option<Vec<u8>>> {
+        Err(anyhow!("No data"))
+    }
+
+    fn get_state_value(&self, state_key: &StateKey) -> Result<Option<Vec<u8>>> {
         Err(anyhow!("No data"))
     }
 

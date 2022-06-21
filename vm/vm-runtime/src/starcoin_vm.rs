@@ -7,9 +7,9 @@ use crate::errors::{
     convert_normal_success_epilogue_error, convert_prologue_runtime_error, error_split,
 };
 use crate::metrics::VMMetrics;
+use crate::move_vm_ext::{MoveVmExt, SessionId};
 use anyhow::{format_err, Error, Result};
 use move_core_types::resolver::MoveResolver;
-use move_vm_runtime::move_vm::MoveVM;
 use move_vm_runtime::move_vm_adapter::{PublishModuleBundleOption, SessionAdapter};
 use move_vm_runtime::session::Session;
 use once_cell::sync::Lazy;
@@ -65,6 +65,7 @@ use starcoin_vm_types::{
     vm_status::{StatusCode, VMStatus},
 };
 use std::convert::{TryFrom, TryInto};
+use std::ops::DerefMut;
 use std::sync::Arc;
 
 static G_ZERO_COST_SCHEDULE: Lazy<CostTable> =
@@ -74,7 +75,7 @@ static G_ZERO_COST_SCHEDULE: Lazy<CostTable> =
 #[allow(clippy::upper_case_acronyms)]
 /// Wrapper of MoveVM
 pub struct StarcoinVM {
-    move_vm: Arc<MoveVM>,
+    move_vm: Arc<MoveVmExt>,
     vm_config: Option<VMConfig>,
     version: Option<Version>,
     move_version: Option<MoveLanguageVersion>,
@@ -86,7 +87,7 @@ const VMCONFIG_UPGRADE_VERSION_MARK: u64 = 10;
 
 impl StarcoinVM {
     pub fn new(metrics: Option<VMMetrics>) -> Self {
-        let inner = MoveVM::new(super::natives::starcoin_natives())
+        let inner = MoveVmExt::new()
             .expect("should be able to create Move VM; check if there are duplicated natives");
         Self {
             move_vm: Arc::new(inner),
@@ -305,7 +306,11 @@ impl StarcoinVM {
         remote_cache: &StateViewCache,
     ) -> Result<(), VMStatus> {
         let txn_data = TransactionMetadata::new(transaction)?;
-        let mut session: SessionAdapter<_> = self.move_vm.new_session(remote_cache).into();
+        let mut session: SessionAdapter<_> = self
+            .move_vm
+            .new_session(remote_cache, SessionId::txn(transaction))
+            .deref_mut()
+            .into();
         let mut gas_status = {
             let mut gas_status = GasStatus::new(self.get_gas_schedule()?, GasUnits::new(0));
             gas_status.set_metering(false);

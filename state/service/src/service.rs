@@ -212,8 +212,14 @@ impl ChainStateReader for Inner {
 }
 
 impl StateView for Inner {
+    // XXX FIXME YSG
     fn get(&self, access_path: &AccessPath) -> Result<Option<Vec<u8>>> {
         self.state_db.get(access_path)
+    }
+
+    fn get_state_value(&self, _state_key: &starcoin_vm_types::state_store::state_key::StateKey) -> Result<Option<Vec<u8>>> {
+        // XXX FIXME YSG
+        todo!()
     }
 
     fn multi_get(&self, _access_paths: &[AccessPath]) -> Result<Vec<Option<Vec<u8>>>> {

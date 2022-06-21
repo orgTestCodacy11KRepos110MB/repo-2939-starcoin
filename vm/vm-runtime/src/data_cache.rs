@@ -4,6 +4,7 @@
 
 use crate::create_access_path;
 use move_core_types::resolver::{ModuleResolver, ResourceResolver};
+use move_table_extension::{TableHandle, TableOperation, TableResolver};
 use starcoin_logger::prelude::*;
 use starcoin_types::account_address::AccountAddress;
 use starcoin_vm_types::{
@@ -16,6 +17,9 @@ use starcoin_vm_types::{
     write_set::{WriteAccessPathSet, WriteOp},
 };
 use std::collections::btree_map::BTreeMap;
+use move_core_types::gas_schedule::{GasAlgebra, GasCarrier, InternalGasUnits};
+use starcoin_vm_types::state_store::state_key::StateKey;
+use anyhow::Error;
 
 /// A local cache for a given a `StateView`. The cache is private to the Diem layer
 /// but can be used as a one shot cache for systems that need a simple `RemoteCache`
@@ -79,6 +83,11 @@ impl<'block> StateView for StateViewCache<'block> {
         }
     }
 
+    fn get_state_value(&self, state_key: &StateKey) -> anyhow::Result<Option<Vec<u8>>> {
+        // XXX FIXME YSG
+        todo!()
+    }
+
     fn multi_get(&self, _access_paths: &[AccessPath]) -> anyhow::Result<Vec<Option<Vec<u8>>>> {
         unimplemented!()
     }
@@ -99,6 +108,16 @@ impl<'block> ResourceResolver for StateViewCache<'block> {
     type Error = VMError;
     fn get_resource(&self, address: &AccountAddress, tag: &StructTag) -> VMResult<Option<Vec<u8>>> {
         RemoteStorage::new(self).get_resource(address, tag)
+    }
+}
+
+impl<'block> TableResolver for StateViewCache<'block> {
+    fn resolve_table_entry(&self, handle: &TableHandle, key: &[u8]) -> Result<Option<Vec<u8>>, Error> {
+        RemoteStorage::new(self).resolve_table_entry(handle, key)
+    }
+
+    fn operation_cost(&self, op: TableOperation, key_size: usize, val_size: usize) -> InternalGasUnits<GasCarrier> {
+        RemoteStorage::new(self).operation_cost(op, key_size, val_size)
     }
 }
 
@@ -143,14 +162,16 @@ impl<'a> ConfigStorage for RemoteStorage<'a> {
     }
 }
 
-/*
 impl<'a> TableResolver for RemoteStorage<'a> {
     fn resolve_table_entry(
         &self,
         handle: &TableHandle,
         key: &[u8],
     ) -> Result<Option<Vec<u8>>, Error> {
-        self.get_state_value(&StateKey::table_item(handle.0, key.to_vec()))
+        self.0.get_state_value(&StateKey::table_item(handle.0, key.to_vec()))
+    }
+
+    fn operation_cost(&self, op: TableOperation, key_size: usize, val_size: usize) -> InternalGasUnits<GasCarrier> {
+        InternalGasUnits::new(1)
     }
 }
- */

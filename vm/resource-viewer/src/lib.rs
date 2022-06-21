@@ -27,6 +27,7 @@ use std::{
     convert::TryInto,
     fmt::{Display, Formatter},
 };
+use starcoin_vm_types::state_store::state_key::StateKey;
 
 mod fat_type;
 pub mod module_cache;
@@ -295,6 +296,10 @@ pub struct NullStateView;
 
 impl StateView for NullStateView {
     fn get(&self, _access_path: &AccessPath) -> Result<Option<Vec<u8>>> {
+        Ok(None)
+    }
+
+    fn get_state_value(&self, _state_key: &StateKey) -> Result<Option<Vec<u8>>> {
         Ok(None)
     }
 

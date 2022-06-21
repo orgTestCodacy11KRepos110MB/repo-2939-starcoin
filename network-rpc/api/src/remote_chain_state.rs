@@ -101,6 +101,11 @@ impl StateView for RemoteChainStateReader {
         Ok(state_proof.state)
     }
 
+    fn get_state_value(&self, _state_key: &starcoin_vm_types::state_store::state_key::StateKey) -> Result<Option<Vec<u8>>> {
+        // XXX FIXME YSG
+        todo!()
+    }
+
     fn multi_get(&self, _access_paths: &[AccessPath]) -> Result<Vec<Option<Vec<u8>>>> {
         unimplemented!()
     }

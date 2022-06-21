@@ -12,6 +12,7 @@ use starcoin_types::account_state::AccountState;
 use starcoin_types::block::BlockNumber;
 use starcoin_types::state_set::{AccountStateSet, ChainStateSet};
 use std::str::FromStr;
+use starcoin_vm_types::state_store::state_key::StateKey;
 
 #[derive(Debug, Clone, Copy)]
 pub enum StateRootOption {
@@ -106,6 +107,11 @@ impl<'a> StateView for RemoteStateReader<'a> {
             .state_get_with_proof_by_root(access_path.clone(), self.state_root())?
             .state
             .map(|v| v.0))
+    }
+
+    fn get_state_value(&self, _state_key: &StateKey) -> Result<Option<Vec<u8>>> {
+        // XXX FIXME YSG
+        todo!()
     }
 
     fn multi_get(&self, _access_paths: &[AccessPath]) -> Result<Vec<Option<Vec<u8>>>> {

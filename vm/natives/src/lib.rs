@@ -123,6 +123,7 @@ pub fn starcoin_natives() -> NativeFunctionTable {
         ("U256", "native_div", u256::native_u256_div),
         ("U256", "native_rem", u256::native_u256_rem),
         ("U256", "native_pow", u256::native_u256_pow),
+        // XXX FIXME YSG
     ];
     NATIVES
         .iter()

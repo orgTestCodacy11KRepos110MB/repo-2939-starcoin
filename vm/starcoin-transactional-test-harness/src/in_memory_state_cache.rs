@@ -3,6 +3,7 @@ use dashmap::DashMap;
 use starcoin_state_api::ChainStateWriter;
 use starcoin_types::state_set::ChainStateSet;
 use starcoin_vm_types::access_path::AccessPath;
+use starcoin_vm_types::state_store::state_key::StateKey;
 use starcoin_vm_types::state_view::StateView;
 use starcoin_vm_types::write_set::{WriteAccessPathSet, WriteAccessPathSetMut, WriteOp};
 
@@ -84,6 +85,11 @@ impl<V: StateView> StateView for InMemoryStateCache<V> {
                 }
             },
         }
+    }
+
+    fn get_state_value(&self, state_key: &StateKey) -> anyhow::Result<Option<Vec<u8>>> {
+        // XXX FIXME YSG
+        todo!()
     }
 
     fn multi_get(&self, _access_paths: &[AccessPath]) -> anyhow::Result<Vec<Option<Vec<u8>>>> {

@@ -19,6 +19,7 @@ use starcoin_vm_types::write_set::WriteAccessPathSet;
 use std::collections::BTreeMap;
 use std::sync::Arc;
 use tokio::runtime::Runtime;
+use starcoin_vm_types::state_store::state_key::StateKey;
 
 pub enum SelectableStateView<A, B> {
     A(A),
@@ -176,6 +177,11 @@ where
             None => self.b.get(access_path),
             Some(d) => Ok(Some(d)),
         }
+    }
+
+    fn get_state_value(&self, state_key: &StateKey) -> Result<Option<Vec<u8>>> {
+        // XXX FIXME YSG
+        todo!()
     }
 
     fn multi_get(&self, _access_paths: &[AccessPath]) -> Result<Vec<Option<Vec<u8>>>> {
@@ -338,6 +344,11 @@ impl StateView for RemoteStateView {
                 .get_resource(&access_path.address, s)
                 .map_err(|err| err.finish(Location::Undefined).into_vm_status())?),
         }
+    }
+
+    fn get_state_value(&self, state_key: &StateKey) -> Result<Option<Vec<u8>>> {
+        // XXX FIXME YSG
+        todo!()
     }
 
     fn multi_get(&self, _access_paths: &[AccessPath]) -> Result<Vec<Option<Vec<u8>>>> {

@@ -26,10 +26,12 @@ use starcoin_types::{
 use starcoin_vm_types::access_path::{DataPath, ModuleName};
 use starcoin_vm_types::language_storage::StructTag;
 use starcoin_vm_types::state_view::StateView;
-use std::collections::HashSet;
+use std::collections::{BTreeMap, HashSet};
 use std::convert::TryInto;
 use std::sync::Arc;
+use move_table_extension::TableHandle;
 use thiserror::Error;
+use starcoin_vm_types::state_store::state_key::StateKey;
 
 #[derive(Error, Debug)]
 pub enum StateError {
@@ -213,6 +215,8 @@ pub struct ChainStateDB {
     state_tree: StateTree<AccountAddress>,
     cache: Mutex<LruCache<AccountAddress, CacheItem>>,
     updates: RwLock<HashSet<AccountAddress>>,
+    // XXX FIXME YSG
+    index_tables: BTreeMap<TableHandle, HashValue>,
 }
 
 static G_DEFAULT_CACHE_SIZE: usize = 10240;
@@ -223,11 +227,17 @@ impl ChainStateDB {
     }
 
     pub fn new(store: Arc<dyn StateNodeStore>, root_hash: Option<HashValue>) -> Self {
+        let mut map = BTreeMap::new();
+        let state_tree = StateTree::new(store.clone(), root_hash);
+        // XXX FIXME YSG
+        map.insert(TableHandle(u128::from_be_bytes(HashValue::zero().as_ref()[..16].try_into().expect("Slice to array conversion failed."))), HashValue::zero());
+
         Self {
-            store: store.clone(),
-            state_tree: StateTree::new(store, root_hash),
+            store,
+            state_tree,
             cache: Mutex::new(LruCache::new(G_DEFAULT_CACHE_SIZE)),
             updates: RwLock::new(HashSet::new()),
+            index_tables: map,
         }
     }
 
@@ -238,12 +248,7 @@ impl ChainStateDB {
 
     /// Fork a new statedb at `root_hash`
     pub fn fork_at(&self, state_root: HashValue) -> Self {
-        Self {
-            store: self.store.clone(),
-            state_tree: StateTree::new(self.store.clone(), Some(state_root)),
-            cache: Mutex::new(LruCache::new(G_DEFAULT_CACHE_SIZE)),
-            updates: RwLock::new(HashSet::new()),
-        }
+        Self::new(self.store.clone(), Some(state_root))
     }
 
     fn new_state_tree<K: RawKey>(&self, root_hash: HashValue) -> StateTree<K> {
@@ -321,6 +326,20 @@ impl StateView for ChainStateDB {
                 Some(account_state) => account_state.get(data_path),
                 None => Ok(None),
             })
+    }
+
+    fn get_state_value(&self, state_key: &StateKey) -> Result<Option<Vec<u8>>> {
+        match state_key {
+            StateKey::AccessPath(access_path) => {
+                self.get(access_path)
+            }
+            StateKey::TableItem {handle, key} => {
+                let state_root = self.index_tables.get(handle).cloned();
+                let state_tree = StateTree::new(self.store.clone(), state_root);
+                // XXXX FIXME YSG
+                state_tree.get(key)
+            }
+        }
     }
 
     /// Gets state data for a list of access paths.
