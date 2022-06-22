@@ -28,6 +28,7 @@ use starcoin_vm_types::language_storage::StructTag;
 use starcoin_vm_types::state_view::StateView;
 use std::collections::{BTreeMap, HashSet};
 use std::convert::TryInto;
+use std::hash::Hash;
 use std::sync::Arc;
 use move_table_extension::TableHandle;
 use thiserror::Error;
@@ -216,7 +217,7 @@ pub struct ChainStateDB {
     cache: Mutex<LruCache<AccountAddress, CacheItem>>,
     updates: RwLock<HashSet<AccountAddress>>,
     // XXX FIXME YSG
-    index_tables: BTreeMap<TableHandle, HashValue>,
+    index_tables: BTreeMap<u128, AccountState>,
 }
 
 static G_DEFAULT_CACHE_SIZE: usize = 10240;
@@ -230,7 +231,8 @@ impl ChainStateDB {
         let mut map = BTreeMap::new();
         let state_tree = StateTree::new(store.clone(), root_hash);
         // XXX FIXME YSG
-        map.insert(TableHandle(u128::from_be_bytes(HashValue::zero().as_ref()[..16].try_into().expect("Slice to array conversion failed."))), HashValue::zero());
+        let state = AccountState::new(None, HashValue::zero());
+        map.insert(u128::from_be_bytes(state.hash().as_ref()[..16].try_into().expect("Slice to array conversion failed.")), state);
 
         Self {
             store,
@@ -333,12 +335,13 @@ impl StateView for ChainStateDB {
             StateKey::AccessPath(access_path) => {
                 self.get(access_path)
             }
-            StateKey::TableItem {handle, key} => {
+            StateKey::TableItem {handle, path} => {
                 let state_root = self.index_tables.get(handle).cloned();
                 let state_tree = StateTree::new(self.store.clone(), state_root);
                 // XXXX FIXME YSG
                 state_tree.get(key)
             }
+            _ => unreachable!()
         }
     }
 

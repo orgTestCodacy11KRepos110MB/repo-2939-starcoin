@@ -67,6 +67,7 @@ use starcoin_vm_types::{
 use std::convert::{TryFrom, TryInto};
 use std::ops::DerefMut;
 use std::sync::Arc;
+use move_vm_runtime::move_vm::MoveVM;
 
 static G_ZERO_COST_SCHEDULE: Lazy<CostTable> =
     Lazy::new(|| zero_cost_schedule(NativeCostIndex::NUMBER_OF_NATIVE_FUNCTIONS));
@@ -75,7 +76,8 @@ static G_ZERO_COST_SCHEDULE: Lazy<CostTable> =
 #[allow(clippy::upper_case_acronyms)]
 /// Wrapper of MoveVM
 pub struct StarcoinVM {
-    move_vm: Arc<MoveVmExt>,
+    //move_vm: Arc<MoveVmExt>,
+    move_vm : Arc<MoveVM>,
     vm_config: Option<VMConfig>,
     version: Option<Version>,
     move_version: Option<MoveLanguageVersion>,
@@ -87,7 +89,8 @@ const VMCONFIG_UPGRADE_VERSION_MARK: u64 = 10;
 
 impl StarcoinVM {
     pub fn new(metrics: Option<VMMetrics>) -> Self {
-        let inner = MoveVmExt::new()
+       // let inner = MoveVmExt::new()
+        let inner = MoveVM::new(super::natives::starcoin_natives())
             .expect("should be able to create Move VM; check if there are duplicated natives");
         Self {
             move_vm: Arc::new(inner),
@@ -306,11 +309,14 @@ impl StarcoinVM {
         remote_cache: &StateViewCache,
     ) -> Result<(), VMStatus> {
         let txn_data = TransactionMetadata::new(transaction)?;
+        let mut session: SessionAdapter<_> = self.move_vm.new_session(remote_cache).into();
+        /*
         let mut session: SessionAdapter<_> = self
             .move_vm
             .new_session(remote_cache, SessionId::txn(transaction))
             .deref_mut()
             .into();
+         */
         let mut gas_status = {
             let mut gas_status = GasStatus::new(self.get_gas_schedule()?, GasUnits::new(0));
             gas_status.set_metering(false);

@@ -4,7 +4,7 @@
 // Copyright (c) Aptos
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::access_path::AccessPath;
+use crate::access_path::{AccessPath, DataPath};
 use num_derive::{FromPrimitive, ToPrimitive};
 use num_traits::FromPrimitive;
 use serde::{Deserialize, Serialize};
@@ -21,9 +21,7 @@ pub enum StateKey {
     AccessPath(AccessPath),
     TableItem {
         handle: u128,
-        // XXX FIXME YSG
-        #[serde(with = "serde_bytes")]
-        key: Vec<u8>,
+        path: DataPath,
     },
     // Only used for testing
     #[serde(with = "serde_bytes")]
@@ -47,9 +45,9 @@ impl StateKey {
             StateKey::AccessPath(access_path) => {
                 (StateKeyTag::AccessPath, bcs::to_bytes(access_path)?)
             }
-            StateKey::TableItem { handle, key } => {
+            StateKey::TableItem { handle, path } => {
                 let mut bytes = handle.to_be_bytes().to_vec();
-                bytes.extend(key);
+                bytes.extend(bcs::to_bytes(path)?);
                 (StateKeyTag::TableItem, bytes)
             }
             StateKey::Raw(raw_bytes) => (StateKeyTag::Raw, raw_bytes.to_vec()),
@@ -82,18 +80,19 @@ impl StateKey {
                         .try_into()
                         .expect("Bytes too short."),
                 );
-                let key = val[1 + HANDLE_SIZE..].to_vec();
-                Ok(StateKey::table_item(handle, key))
+                let path: DataPath = bcs::from_bytes(&val[1 + HANDLE_SIZE..])?;
+                Ok(StateKey::table_item(handle, path))
             }
             StateKeyTag::Raw => Ok(StateKey::Raw(val[1..].to_vec())),
         }
     }
 
-    pub fn table_item(handle: u128, key: Vec<u8>) -> Self {
-        StateKey::TableItem { handle, key }
+    pub fn table_item(handle: u128, path: DataPath) -> Self {
+        StateKey::TableItem { handle, path }
     }
 }
 
+/*
 /// XXX FIXME YSG
 /// using derive CryptoHash
 impl CryptoHash for StateKey {
@@ -109,6 +108,7 @@ impl CryptoHash for StateKey {
         state.finish()
     }
 }
+ */
 
 /// Error thrown when a [`StateKey`] fails to be deserialized out of a byte sequence stored in physical
 /// storage, via [`StateKey::decode`].
