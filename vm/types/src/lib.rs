@@ -49,7 +49,7 @@ pub mod gas_schedule {
         VEC_REMOVE = 31,
         VEC_REVERSE = 32,
         TABLE_NEW = 33,
-        TABLE_ADD = 34,
+        TABLE_INSERT= 34,
         TABLE_BORROW = 35,
         TABLE_BORROW_MUT = 36,
         TABLE_REMOVE = 37,
