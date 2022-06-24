@@ -21,6 +21,9 @@ use move_vm_runtime::native_functions::{NativeFunction, NativeFunctionTable};
 /// NOTICE:
 /// - mostly re-use natives defined in move-stdlib.
 /// - be careful with the native cost table index used in the implementation
+/// -  vm/types/src/lib.rs  pub enum NativeCostIndex need modified
+/// - need modify starcoinorg/starcoin-framework/blob/main/sources/VMConfig.move
+///   public fun native_schedule(): vector<GasCost> {
 pub fn starcoin_natives() -> NativeFunctionTable {
     const NATIVES: &[(&str, &str, NativeFunction)] = &[
         (
