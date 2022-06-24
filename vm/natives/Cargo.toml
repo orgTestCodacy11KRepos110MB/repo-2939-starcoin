@@ -27,6 +27,7 @@ ripemd160 = "0.9.1"
 num_enum = "0.5.7"
 starcoin-uint = {path = "../../types/uint"}
 starcoin-vm-types=  {path = "../types"}
+move-table-extension = { git = "https://github.com/starcoinorg/move", rev = "f227e6b5c4214e5074c0fcb1ff551513a956b5d8" }
 
 [dev-dependencies]
 rand = "0.8.5"
