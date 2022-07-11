@@ -836,7 +836,7 @@ checksum = "e3b5ca7a04898ad4bcd41c90c5285445ff5b791899bb1b0abdd2a2aa791211d7"
 [[package]]
 name = "bytecode-interpreter-crypto"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "curve25519-dalek-fiat",
@@ -4908,7 +4908,7 @@ checksum = "c9be0862c1b3f26a88803c4a49de6889c10e608b3ee9344e6ef5b45fb37ad3d1"
 [[package]]
 name = "move-abigen"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -4924,7 +4924,7 @@ dependencies = [
 [[package]]
 name = "move-binary-format"
 version = "0.0.3"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "move-core-types",
@@ -4939,7 +4939,7 @@ dependencies = [
 [[package]]
 name = "move-borrow-graph"
 version = "0.0.1"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "mirai-annotations",
 ]
@@ -4947,7 +4947,7 @@ dependencies = [
 [[package]]
 name = "move-bytecode-source-map"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -4962,7 +4962,7 @@ dependencies = [
 [[package]]
 name = "move-bytecode-utils"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "move-binary-format",
@@ -4974,7 +4974,7 @@ dependencies = [
 [[package]]
 name = "move-bytecode-verifier"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "move-binary-format",
@@ -4986,7 +4986,7 @@ dependencies = [
 [[package]]
 name = "move-bytecode-viewer"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "clap 3.2.8",
@@ -5003,7 +5003,7 @@ dependencies = [
 [[package]]
 name = "move-cli"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5044,7 +5044,7 @@ dependencies = [
 [[package]]
 name = "move-command-line-common"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "difference",
@@ -5059,7 +5059,7 @@ dependencies = [
 [[package]]
 name = "move-compiler"
 version = "0.0.1"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5088,7 +5088,7 @@ dependencies = [
 [[package]]
 name = "move-core-types"
 version = "0.0.4"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5107,7 +5107,7 @@ dependencies = [
 [[package]]
 name = "move-coverage"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5144,7 +5144,7 @@ dependencies = [
 [[package]]
 name = "move-disassembler"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "clap 3.2.8",
@@ -5162,7 +5162,7 @@ dependencies = [
 [[package]]
 name = "move-docgen"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "codespan 0.11.1",
@@ -5180,7 +5180,7 @@ dependencies = [
 [[package]]
 name = "move-errmapgen"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5194,7 +5194,7 @@ dependencies = [
 [[package]]
 name = "move-ir-compiler"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5213,7 +5213,7 @@ dependencies = [
 [[package]]
 name = "move-ir-to-bytecode"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "codespan-reporting",
@@ -5232,7 +5232,7 @@ dependencies = [
 [[package]]
 name = "move-ir-to-bytecode-syntax"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "hex",
@@ -5245,7 +5245,7 @@ dependencies = [
 [[package]]
 name = "move-ir-types"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "hex",
@@ -5259,7 +5259,7 @@ dependencies = [
 [[package]]
 name = "move-model"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "codespan 0.11.1",
@@ -5285,7 +5285,7 @@ dependencies = [
 [[package]]
 name = "move-package"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5363,7 +5363,7 @@ dependencies = [
 [[package]]
 name = "move-prover"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5400,7 +5400,7 @@ dependencies = [
 [[package]]
 name = "move-prover-boogie-backend"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5428,7 +5428,7 @@ dependencies = [
 [[package]]
 name = "move-prover-test-utils"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "move-command-line-common",
@@ -5439,7 +5439,7 @@ dependencies = [
 [[package]]
 name = "move-read-write-set-types"
 version = "0.0.3"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "move-binary-format",
@@ -5450,7 +5450,7 @@ dependencies = [
 [[package]]
 name = "move-resource-viewer"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5465,7 +5465,7 @@ dependencies = [
 [[package]]
 name = "move-stackless-bytecode"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "codespan 0.11.1",
  "codespan-reporting",
@@ -5492,7 +5492,7 @@ dependencies = [
 [[package]]
 name = "move-stackless-bytecode-interpreter"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bytecode-interpreter-crypto",
@@ -5510,7 +5510,7 @@ dependencies = [
 [[package]]
 name = "move-stdlib"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "log 0.4.17",
  "move-binary-format",
@@ -5531,7 +5531,7 @@ dependencies = [
 [[package]]
 name = "move-symbol-pool"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "once_cell",
  "serde 1.0.137",
@@ -5540,7 +5540,7 @@ dependencies = [
 [[package]]
 name = "move-table-extension"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "bcs",
@@ -5557,7 +5557,7 @@ dependencies = [
 [[package]]
 name = "move-transactional-test-runner"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "clap 3.2.8",
@@ -5588,7 +5588,7 @@ dependencies = [
 [[package]]
 name = "move-unit-test"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "clap 3.2.8",
@@ -5618,7 +5618,7 @@ dependencies = [
 [[package]]
 name = "move-vm-runtime"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "better_any",
  "fail",
@@ -5635,7 +5635,7 @@ dependencies = [
 [[package]]
 name = "move-vm-test-utils"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "move-binary-format",
@@ -5645,7 +5645,7 @@ dependencies = [
 [[package]]
 name = "move-vm-types"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "bcs",
  "move-binary-format",
@@ -6251,9 +6251,9 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.12.0"
+version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7709cef83f0c1f58f666e746a08b21e0085f7440fa6a29cc194d68aac97a4225"
+checksum = "18a6dbe30758c9f83eb00cbea4ac95966305f5a7772f3f42ebfc7fc7eddbd8e1"
 
 [[package]]
 name = "oorandom"
@@ -7570,7 +7570,7 @@ dependencies = [
 [[package]]
 name = "read-write-set"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "move-binary-format",
@@ -7585,7 +7585,7 @@ dependencies = [
 [[package]]
 name = "read-write-set-dynamic"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "move-binary-format",
@@ -10181,6 +10181,7 @@ dependencies = [
  "async-trait",
  "bcs-ext",
  "forkable-jellyfish-merkle",
+ "move-table-extension",
  "serde 1.0.137",
  "starcoin-crypto",
  "starcoin-service-registry",
@@ -10247,6 +10248,7 @@ dependencies = [
  "bcs-ext",
  "forkable-jellyfish-merkle",
  "lru",
+ "move-table-extension",
  "parking_lot 0.12.1",
  "serde 1.0.137",
  "starcoin-crypto",
@@ -10430,6 +10432,7 @@ dependencies = [
  "move-compiler",
  "move-core-types",
  "move-resource-viewer",
+ "move-table-extension",
  "move-transactional-test-runner",
  "once_cell",
  "serde 1.0.137",
@@ -10624,6 +10627,7 @@ dependencies = [
  "move-bytecode-verifier",
  "move-core-types",
  "move-ir-types",
+ "move-table-extension",
  "move-vm-types",
  "num_enum",
  "once_cell",
@@ -12532,7 +12536,7 @@ dependencies = [
 [[package]]
 name = "x"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "anyhow",
  "camino",
@@ -12562,7 +12566,7 @@ dependencies = [
 [[package]]
 name = "x-core"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "camino",
  "debug-ignore",
@@ -12580,7 +12584,7 @@ dependencies = [
 [[package]]
 name = "x-lint"
 version = "0.1.0"
-source = "git+https://github.com/starcoinorg/move?rev=1c51b0fcf076efef5890ea7e251f2e871a728cb6#1c51b0fcf076efef5890ea7e251f2e871a728cb6"
+source = "git+https://github.com/starcoinorg/move?rev=e2af6705af1f036a4b8ad2e9431ed58c3ed08c72#e2af6705af1f036a4b8ad2e9431ed58c3ed08c72"
 dependencies = [
  "camino",
  "guppy 0.12.6",
