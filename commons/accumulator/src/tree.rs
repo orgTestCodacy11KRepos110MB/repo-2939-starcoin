@@ -112,13 +112,23 @@ impl AccumulatorTree {
                         assert_eq!(x, sibling);
                         AccumulatorNode::new_internal(pos.parent(), left_hash, hash)
                     }
-                    None => AccumulatorNode::new_internal(
-                        pos.parent(),
-                        // because left must be frozen and it must be in index_frozen_subtrees or index_to_frozen
-                        self.get_node_frozen_hash(sibling)?
-                            .unwrap_or(*ACCUMULATOR_PLACEHOLDER_HASH),
-                        hash,
-                    ),
+                    None => {
+                        let left_hash = self
+                            .get_node_hash(sibling)?
+                            .unwrap_or(*ACCUMULATOR_PLACEHOLDER_HASH);
+                        let left_hash2 = self
+                            .get_node_frozen_hash(sibling)?
+                            .unwrap_or(*ACCUMULATOR_PLACEHOLDER_HASH);
+                        if left_hash != left_hash2 {
+                            panic!("{}", format!("{} != {}", left_hash, left_hash2));
+                        }
+                        AccumulatorNode::new_internal(
+                            pos.parent(),
+                            // because left must be frozen and it must be in index_frozen_subtrees or index_to_frozen
+                            left_hash,
+                            hash,
+                        )
+                    }
                 };
                 hash = internal_node.hash();
                 pos = pos.parent();
@@ -156,12 +166,17 @@ impl AccumulatorTree {
                         not_frozen.hash()
                     }
                     None => {
-                        let not_frozen = AccumulatorNode::new_internal(
-                            pos.parent(),
-                            self.get_node_frozen_hash(sibling)?
-                                .unwrap_or(*ACCUMULATOR_PLACEHOLDER_HASH),
-                            hash,
-                        );
+                        let left_hash = self
+                            .get_node_hash(sibling)?
+                            .unwrap_or(*ACCUMULATOR_PLACEHOLDER_HASH);
+                        let left_hash2 = self
+                            .get_node_frozen_hash(sibling)?
+                            .unwrap_or(*ACCUMULATOR_PLACEHOLDER_HASH);
+                        if left_hash != left_hash2 {
+                            panic!("{}", format!("{} != {}", left_hash, left_hash2));
+                        }
+                        let not_frozen =
+                            AccumulatorNode::new_internal(pos.parent(), left_hash, hash);
                         not_frozen_nodes.push(not_frozen.clone());
                         not_frozen.hash()
                     }
@@ -227,7 +242,14 @@ impl AccumulatorTree {
     fn scan_frozen_subtree_roots(&mut self) -> Result<Vec<HashValue>> {
         FrozenSubTreeIterator::new(self.num_leaves)
             .map(|p| {
-                self.get_node_frozen_hash(p)?
+                let hash = self.get_node_hash(p);
+                let hash2 = self.get_node_frozen_hash(p);
+                let str = format!("{:?}", hash);
+                let str2 = format!("{:?}", hash2);
+                if str != str2 {
+                    panic!("{}", format!("{} {}", str, str2));
+                }
+                hash?
                     .ok_or_else(|| format_err!("frozen root {:?} must have value, but get none", p))
             })
             .collect()
