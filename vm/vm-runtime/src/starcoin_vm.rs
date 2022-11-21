@@ -1329,6 +1329,7 @@ pub(crate) fn charge_global_write_gas_usage<R: MoveResolver>(
                     .default_account_size,
             )
             .get();
+    println!("charge_global_write_gas_usage {}",total_cost);
     cost_strategy
         .deduct_gas(InternalGasUnits::new(total_cost))
         .map_err(|p_err| p_err.finish(Location::Undefined).into_vm_status())
