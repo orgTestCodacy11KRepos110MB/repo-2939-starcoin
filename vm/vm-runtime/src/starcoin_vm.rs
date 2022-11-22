@@ -847,6 +847,7 @@ impl StarcoinVM {
             )
             .map(|_return_vals| ())
             .or_else(convert_prologue_runtime_error)?;
+        info!("process_block_meta end");
         get_transaction_output(
             &mut (),
             session,

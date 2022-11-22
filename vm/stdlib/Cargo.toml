@@ -15,9 +15,9 @@ fs_extra = "1.2.0"
 include_dir = "0.6.2"
 itertools = "0.10.3"
 log = "0.4.16"
-move-bytecode-verifier = {git = "https://github.com/starcoinorg/move", rev = "075816dbe03801bb5dd407d7a6439c118d764c09"}
-move-compiler = {git = "https://github.com/starcoinorg/move", rev = "075816dbe03801bb5dd407d7a6439c118d764c09"}
-move-prover = {git = "https://github.com/starcoinorg/move", rev = "075816dbe03801bb5dd407d7a6439c118d764c09"}
+move-bytecode-verifier = {git = "https://github.com/starcoinorg/move", rev = "9c50e2a434276191a423385e5d741428f4515d2c"}
+move-compiler = {git = "https://github.com/starcoinorg/move", rev = "9c50e2a434276191a423385e5d741428f4515d2c"}
+move-prover = {git = "https://github.com/starcoinorg/move", rev = "9c50e2a434276191a423385e5d741428f4515d2c"}
 once_cell = "1.13.0"
 serde = {version = "1.0.130", default-features = false}
 sha2 = "0.10.2"
