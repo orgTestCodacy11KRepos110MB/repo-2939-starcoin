@@ -801,6 +801,7 @@ impl StarcoinVM {
         remote_cache: &mut StateViewCache<'_, S>,
         block_metadata: BlockMetadata,
     ) -> Result<TransactionOutput, VMStatus> {
+        info!("process_block_meta begin");
         let txn_sender = account_config::genesis_address();
         // always use 0 gas for system.
         let max_gas_amount = GasUnits::new(0);
