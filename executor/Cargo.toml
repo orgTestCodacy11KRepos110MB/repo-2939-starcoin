@@ -35,7 +35,7 @@ stdlib = {package = "stdlib", path = "../vm/stdlib"}
 stest = {path = "../commons/stest"}
 tempfile = "3.1.0"
 test-helper = {path = "../test-helper"}
-move-transactional-test-runner = {git = "https://github.com/starcoinorg/move", rev = "8c929c82385942879336e05bc40e8718d7adcb8e"}
+move-transactional-test-runner = {git = "https://github.com/starcoinorg/move", rev = "6ec4facd14fe3a526be48b989e7b38eb8fbb17b3"}
 
 [features]
 default = []

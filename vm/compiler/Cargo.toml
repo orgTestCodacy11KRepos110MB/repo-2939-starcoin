@@ -8,9 +8,9 @@ version = "1.12.6"
 
 [dependencies]
 anyhow = "1.0.41"
-move-binary-format = {git = "https://github.com/starcoinorg/move", rev = "8c929c82385942879336e05bc40e8718d7adcb8e"}
-move-command-line-common = {git = "https://github.com/starcoinorg/move", rev = "8c929c82385942879336e05bc40e8718d7adcb8e"}
-move-compiler = {package = "move-compiler", git = "https://github.com/starcoinorg/move", rev = "8c929c82385942879336e05bc40e8718d7adcb8e"}
+move-binary-format = {git = "https://github.com/starcoinorg/move", rev = "6ec4facd14fe3a526be48b989e7b38eb8fbb17b3"}
+move-command-line-common = {git = "https://github.com/starcoinorg/move", rev = "6ec4facd14fe3a526be48b989e7b38eb8fbb17b3"}
+move-compiler = {package = "move-compiler", git = "https://github.com/starcoinorg/move", rev = "6ec4facd14fe3a526be48b989e7b38eb8fbb17b3"}
 once_cell = "1.13.0"
 petgraph = "0.5.1"
 regex = {version = "1.6.0", default-features = false, features = [
