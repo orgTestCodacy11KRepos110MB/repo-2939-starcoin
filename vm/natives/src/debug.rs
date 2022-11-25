@@ -12,6 +12,7 @@ use move_vm_types::{
 };
 use smallvec::smallvec;
 use std::collections::VecDeque;
+use log::info;
 
 #[allow(unused_mut)]
 #[allow(unused_variables)]
@@ -33,7 +34,7 @@ pub fn native_print(
         print_reference(&mut buf, &r)?;
         println!("[debug] {}", buf);
     }
-
+    info!("native_print cost {:#?}", ONE_GAS_UNIT);
     Ok(NativeResult::ok(ONE_GAS_UNIT, smallvec![]))
 }
 
@@ -52,6 +53,6 @@ pub fn native_print_stack_trace(
         context.print_stack_trace(&mut s)?;
         println!("{}", s);
     }
-
+    info!("native_print_stack_trace cost {:#?}", ONE_GAS_UNIT);
     Ok(NativeResult::ok(ONE_GAS_UNIT, smallvec![]))
 }
