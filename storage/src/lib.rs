@@ -23,7 +23,7 @@ use starcoin_accumulator::AccumulatorTreeStore;
 use starcoin_state_store_api::{StateNode, StateNodeStore};
 use starcoin_types::contract_event::ContractEvent;
 use starcoin_types::startup_info::{ChainInfo, ChainStatus, SnapshotRange};
-use starcoin_types::table::{TableHandleKey, TableInfoValue};
+//use starcoin_types::table::{TableHandleKey, TableInfoValue};
 use starcoin_types::transaction::{RichTransactionInfo, Transaction};
 use starcoin_types::{
     block::{Block, BlockBody, BlockHeader, BlockInfo},
@@ -136,7 +136,7 @@ static VEC_PREFIX_NAME_V3: Lazy<Vec<ColumnFamilyName>> = Lazy::new(|| {
         TRANSACTION_INFO_HASH_PREFIX_NAME,
         CONTRACT_EVENT_PREFIX_NAME,
         FAILED_BLOCK_PREFIX_NAME,
-        TABLE_INFO_PREFIX_NAME,
+        //TABLE_INFO_PREFIX_NAME,
     ]
 });
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, IntoPrimitive, TryFromPrimitive)]
@@ -272,7 +272,7 @@ pub struct Storage {
     block_info_storage: BlockInfoStorage,
     event_storage: ContractEventStorage,
     chain_info_storage: ChainInfoStorage,
-    table_info_storage: TableInfoStorage,
+    // table_info_storage: TableInfoStorage,
     // instance: StorageInstance,
 }
 
@@ -291,8 +291,8 @@ impl Storage {
                 AccumulatorStorage::new_transaction_accumulator_storage(instance.clone()),
             block_info_storage: BlockInfoStorage::new(instance.clone()),
             event_storage: ContractEventStorage::new(instance.clone()),
-            chain_info_storage: ChainInfoStorage::new(instance.clone()),
-            table_info_storage: TableInfoStorage::new(instance),
+            chain_info_storage: ChainInfoStorage::new(instance),
+            // table_info_storage: TableInfoStorage::new(instance),
             // instance,
         };
         Ok(storage)
@@ -647,6 +647,8 @@ impl Store for Storage {
     }
 }
 
+/*
+XXX FIXME YSG temp comment
 impl TableInfoStore for Storage {
     fn get_table_info(&self, key: TableHandleKey) -> Result<Option<TableInfoValue>> {
         self.table_info_storage.get(key)
@@ -669,3 +671,4 @@ impl TableInfoStore for Storage {
         self.table_info_storage.write_batch(batch)
     }
 }
+*/

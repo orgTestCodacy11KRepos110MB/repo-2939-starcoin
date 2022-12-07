@@ -136,7 +136,7 @@ impl StarcoinVM {
             self.vm_config = if stdlib_version
                 < StdlibVersion::Version(VMCONFIG_UPGRADE_VERSION_MARK)
             {
-                debug!(
+                info!(
                     "stdlib version: {}, fetch vmconfig from onchain resource",
                     stdlib_version
                 );
@@ -144,7 +144,7 @@ impl StarcoinVM {
                     format_err!("Load VMConfig fail, VMConfig resource not exist.")
                 })?)
             } else {
-                debug!(
+                info!(
                     "stdlib version: {}, fetch vmconfig from onchain module",
                     stdlib_version
                 );
