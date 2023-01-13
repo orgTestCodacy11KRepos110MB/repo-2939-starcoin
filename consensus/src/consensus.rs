@@ -103,6 +103,11 @@ pub trait Consensus {
             .calculate_pow_hash(&pow_header_blob, nonce, extra)?
             .into();
         let target = difficult_to_target(difficulty);
+
+        debug!(
+            "verify_header nonce {}, extra {}, pow_header_blob {:?}, pow_hash {}, target {}",
+            nonce, extra, pow_header_blob, pow_hash, target,
+        );
         if pow_hash > target {
             return Err(ConsensusVerifyError::VerifyNonceError {
                 target,

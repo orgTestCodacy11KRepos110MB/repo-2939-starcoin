@@ -7,6 +7,7 @@ use anyhow::Result;
 use cryptonight::cryptonight_r;
 use starcoin_chain_api::ChainReader;
 use starcoin_crypto::HashValue;
+use starcoin_logger::prelude::debug;
 use starcoin_types::block::BlockHeaderExtra;
 use starcoin_types::U256;
 
@@ -33,6 +34,7 @@ impl Consensus for CryptoNightConsensus {
         extra: &BlockHeaderExtra,
     ) -> Result<HashValue> {
         let mix_hash = set_header_nonce(mining_hash, nonce, extra);
+        debug!("mining_hash {:?}, nonce {}, extra {}, mix_hash {:?}", mining_hash, nonce, extra, mix_hash);
         let pow_hash = cryptonight_r(&mix_hash, mix_hash.len());
         Ok(HashValue::from_slice(pow_hash.as_slice())?)
     }
