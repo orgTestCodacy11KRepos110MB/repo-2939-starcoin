@@ -34,8 +34,9 @@ impl Consensus for CryptoNightConsensus {
         extra: &BlockHeaderExtra,
     ) -> Result<HashValue> {
         let mix_hash = set_header_nonce(mining_hash, nonce, extra);
-        debug!("mining_hash {:?}, nonce {}, extra {}, mix_hash {:?}", mining_hash, nonce, extra, mix_hash);
+        debug!("mining_hash {:?}, nonce {}, extra {}, mix_hash input 0x{}", mining_hash, nonce, extra, hex::encode(mix_hash.clone()));
         let pow_hash = cryptonight_r(&mix_hash, mix_hash.len());
+        debug!("outpub 0x{}", hex::encode(pow_hash.clone()));
         Ok(HashValue::from_slice(pow_hash.as_slice())?)
     }
 }
