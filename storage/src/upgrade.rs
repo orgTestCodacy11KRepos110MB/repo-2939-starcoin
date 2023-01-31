@@ -29,7 +29,6 @@ pub static BARNARD_HARD_FORK_HASH: Lazy<HashValue> = Lazy::new(|| {
     )
     .expect("")
 });
-//0xab8d4b4faeb27b4e4912bf4341ff8dbe5fb467f4909e2ba333f02eb908245d38
 impl DBUpgrade {
     pub fn check_upgrade(instance: &mut StorageInstance) -> Result<()> {
         let version_in_db = {
